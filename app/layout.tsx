@@ -1,16 +1,12 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Manrope } from "next/font/google";
 import "./globals.css";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import SidebarComponent from "@/components/SidebarComponent";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"]
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const manrope = Manrope({
+  weight: ["400", "500", "700"],
+  display: "swap",
   subsets: ["latin"]
 });
 
@@ -27,13 +23,13 @@ export default function RootLayout({
   return (
     <SidebarProvider>
       <SidebarComponent />
-      <main>
+      <main className=" p-12 w-full">
         <html
-          lang="en"
+          lang="pt-br"
           suppressHydrationWarning
-          className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+          className={manrope.className}
         >
-          <body className="min-h-full  flex flex-col">{children}</body>
+          <body>{children}</body>
         </html>
       </main>
     </SidebarProvider>
