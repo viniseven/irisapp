@@ -1,0 +1,19 @@
+// lib/prisma.ts
+import { PrismaClient } from "@/generated/prisma/client";
+
+const createPrismaClient = () => {
+  return new PrismaClient({
+    // Injeta a string de conexão na propriedade oficial aceita pelo construtor
+    datasources: {
+      db: {
+        url: process.env.DATABASE_URL,
+      },
+    },
+  });
+};
+
+const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
+
+export const db = globalForPrisma.prisma || createPrismaClient();
+
+if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = db;

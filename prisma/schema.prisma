@@ -1,6 +1,5 @@
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -15,14 +14,14 @@ model Employee {
   sector    Sector   @relation(fields: [sectorId], references: [id])
   jobTitle  String
   isActive  Boolean  @default(true)
-  createdAt DateTime
-  updatedAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Sector {
   id         String     @id @default(uuid())
   name       String
-  createdAt  DateTime
-  updatedAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
   employeers Employee[]
 }
