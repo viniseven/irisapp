@@ -13,6 +13,13 @@ import { Input } from "@/components/ui/input";
 import ButtonAction from "@/components/ButtonAction";
 import { createSector } from "@/app/_actions/sector/createSector";
 import { Loader2Icon } from "lucide-react";
+import { getFindSector } from "@/app/_dataAccess/sector/getSector";
+import InfoCard from "@/components/InfoCard";
+import { toast } from "sonner";
+
+interface ChangeDialogOpenProps {
+  changeStatusModal: () => void;
+}
 
 const formSchema = z.object({
   name: z.string().trim().min(1, "O nome do setor é obrigatório"),
@@ -20,7 +27,9 @@ const formSchema = z.object({
 
 export type FormSchema = z.infer<typeof formSchema>;
 
-export default function FormSectorComponent() {
+export default function FormSectorComponent({
+  changeStatusModal,
+}: ChangeDialogOpenProps) {
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -28,9 +37,20 @@ export default function FormSectorComponent() {
     },
   });
 
+  function handleDialogOpenchange() {
+    changeStatusModal(false);
+  }
+
   const onSubmit = async (data: FormSchema) => {
     try {
+      const findSector = await getFindSector(data.name);
+
+      if (findSector) {
+        toast.error("Já existe um setor com este nome");
+        return;
+      }
       await createSector(data);
+      handleDialogOpenchange();
     } catch (error) {
       console.error("Erro ao criar setor:", error);
     }
@@ -77,6 +97,7 @@ export default function FormSectorComponent() {
           )}
         />
       </FieldGroup>
+      <InfoCard info="Ao criar um novo setor, ele ficará disponível imediatamente para atribuição de colaboradores e trilhas de treinamento" />
       <Field orientation="horizontal" className="justify-end gap-4">
         <ButtonAction
           type="reset"

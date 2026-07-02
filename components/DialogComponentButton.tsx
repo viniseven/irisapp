@@ -1,3 +1,5 @@
+"use client";
+
 import FormSectorComponent from "@/app/sector/_components/FormSectorComponent";
 import ButtonAction from "./ButtonAction";
 import {
@@ -8,6 +10,7 @@ import {
   DialogTrigger,
 } from "./ui/dialog";
 import { Plus } from "lucide-react";
+import React, { useState } from "react";
 
 interface DialogComponentProps {
   dialogHeader?: string;
@@ -18,8 +21,10 @@ export default function DialogComponent({
   dialogHeader,
   dialogDescription,
 }: DialogComponentProps) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
-    <Dialog>
+    <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
       <DialogTrigger asChild>
         <ButtonAction>
           <Plus />
@@ -33,7 +38,7 @@ export default function DialogComponent({
         <DialogDescription className="text-text-muted">
           {dialogDescription}
         </DialogDescription>
-        <FormSectorComponent />
+        <FormSectorComponent changeStatusModal={setIsModalOpen} />
       </DialogContent>
     </Dialog>
   );
