@@ -1,3 +1,8 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
@@ -15,14 +20,14 @@ model Employee {
   sector    Sector   @relation(fields: [sectorId], references: [id])
   jobTitle  String
   isActive  Boolean  @default(true)
-  createdAt DateTime
-  updatedAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Sector {
   id         String     @id @default(uuid())
   name       String
-  createdAt  DateTime
-  updatedAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
   employeers Employee[]
 }

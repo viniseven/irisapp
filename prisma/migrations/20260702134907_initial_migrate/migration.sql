@@ -6,7 +6,7 @@ CREATE TABLE "Employee" (
     "sectorId" TEXT NOT NULL,
     "jobTitle" TEXT NOT NULL,
     "isActive" BOOLEAN NOT NULL DEFAULT true,
-    "createdAt" TIMESTAMP(3) NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Employee_pkey" PRIMARY KEY ("id")
@@ -15,6 +15,9 @@ CREATE TABLE "Employee" (
 -- CreateTable
 CREATE TABLE "Sector" (
     "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Sector_pkey" PRIMARY KEY ("id")
 );
