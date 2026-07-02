@@ -12,6 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import ButtonAction from "@/components/ButtonAction";
 import { createSector } from "@/app/_actions/sector/createSector";
+import { Loader2Icon } from "lucide-react";
 
 const formSchema = z.object({
   name: z.string().trim().min(1, "O nome do setor é obrigatório"),
@@ -85,8 +86,15 @@ export default function FormSectorComponent() {
         >
           Limpar
         </ButtonAction>
-        <ButtonAction type="submit" form="formSector">
-          Cadastrar Setor
+        <ButtonAction
+          type="submit"
+          form="formSector"
+          disabled={form.formState.isSubmitting}
+        >
+          {form.formState.isSubmitting && (
+            <Loader2Icon className="animate-spin" />
+          )}
+          Salvar
         </ButtonAction>
       </Field>
     </form>
