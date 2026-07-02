@@ -1,19 +1,10 @@
-// lib/prisma.ts
-import { PrismaClient } from "@/generated/prisma/client";
+import "dotenv/config";
+import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaClient } from "../generated/prisma/client";
 
-const createPrismaClient = () => {
-  return new PrismaClient({
-    // Injeta a string de conexão na propriedade oficial aceita pelo construtor
-    datasources: {
-      db: {
-        url: process.env.DATABASE_URL,
-      },
-    },
-  });
-};
+const connectionString = `${process.env.DATABASE_URL}`;
 
-const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
+const adapter = new PrismaPg({ connectionString });
+const prisma = new PrismaClient({ adapter });
 
-export const db = globalForPrisma.prisma || createPrismaClient();
-
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = db;
+export { prisma };
