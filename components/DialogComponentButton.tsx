@@ -10,7 +10,7 @@ import {
   DialogTrigger,
 } from "./ui/dialog";
 import { Plus } from "lucide-react";
-import React, { useState } from "react";
+import { useState } from "react";
 
 interface DialogComponentProps {
   dialogHeader?: string;
