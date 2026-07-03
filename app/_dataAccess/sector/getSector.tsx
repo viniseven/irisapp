@@ -9,13 +9,9 @@ export async function getAllSector() {
 }
 
 export async function getFindSector(name: string) {
-  const sector = await prisma.sector.findFirst({
+  return await prisma.sector.findFirst({
     where: {
-      name: name,
+      name,
     },
   });
-
-  return {
-    name: sector?.name,
-  };
 }
