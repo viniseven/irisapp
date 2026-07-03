@@ -22,7 +22,7 @@ interface ChangeDialogOpenProps {
 }
 
 const formSchema = z.object({
-  name: z.string().trim().min(1, "O nome do setor é obrigatório"),
+  name: z.string().trim().min(1, "O nome do setor é obrigatório").toLowerCase(),
 });
 
 export type FormSchema = z.infer<typeof formSchema>;
@@ -43,14 +43,17 @@ export default function FormSectorComponent({
 
   const onSubmit = async (data: FormSchema) => {
     try {
-      const findSector = await getFindSector(data.name);
+      const { name } = data;
 
-      if (findSector) {
+      const resultFindSector = await getFindSector(name);
+
+      if (resultFindSector) {
         toast.error("Já existe um setor com este nome");
         return;
       }
       await createSector(data);
       handleDialogOpenchange();
+      toast.success("Setor cadastrado com sucesso");
     } catch (error) {
       console.error("Erro ao criar setor:", error);
     }
