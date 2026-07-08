@@ -21,7 +21,7 @@ interface ChangeDialogOpenProps {
   changeStatusModal: () => void;
 }
 
-const formSchema = z.object({
+export const formSchema = z.object({
   name: z.string().trim().min(1, "O nome do setor é obrigatório").toLowerCase(),
 });
 
