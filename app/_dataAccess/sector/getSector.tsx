@@ -15,3 +15,21 @@ export async function getFindSector(name: string) {
     },
   });
 }
+
+export async function getSectorEmployeeCount() {
+  const sectors = await prisma.sector.findMany({
+    select: {
+      name: true,
+      _count: {
+        select: {
+          employeers: true,
+        },
+      },
+    },
+  });
+
+  return sectors.map((sector) => ({
+    name: sector.name,
+    quantityEmployees: sector._count.employeers,
+  }));
+}
