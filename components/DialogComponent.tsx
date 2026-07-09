@@ -1,6 +1,6 @@
 "use client";
 
-import FormSectorComponent from "@/app/sector/_components/FormSectorComponent";
+import FormSectorComponent from "@/app/sector/_components/formSectorComponent";
 import ButtonAction from "./ButtonAction";
 import {
   Dialog,
@@ -15,11 +15,13 @@ import { useState } from "react";
 interface DialogComponentProps {
   dialogHeader?: string;
   dialogDescription?: string;
+  children: React.ReactNode;
 }
 
 export default function DialogComponent({
   dialogHeader,
   dialogDescription,
+  children,
 }: DialogComponentProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -28,7 +30,7 @@ export default function DialogComponent({
       <DialogTrigger asChild>
         <ButtonAction>
           <Plus />
-          Novo Setor
+          {dialogHeader}
         </ButtonAction>
       </DialogTrigger>
       <DialogContent className="bg-background">
@@ -38,7 +40,7 @@ export default function DialogComponent({
         <DialogDescription className="text-text-muted">
           {dialogDescription}
         </DialogDescription>
-        <FormSectorComponent changeStatusModal={setIsModalOpen} />
+        {children}
       </DialogContent>
     </Dialog>
   );
