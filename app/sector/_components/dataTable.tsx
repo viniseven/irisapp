@@ -60,6 +60,7 @@ export default function DataTable<TData, TValue>({
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
+                className="font-semibold"
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id} className="px-10 py-8">

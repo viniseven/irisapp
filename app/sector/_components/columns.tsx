@@ -1,7 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { formSchema } from "./FormSectorComponent";
+import { formSchema } from "./formSectorComponent";
 import z from "zod";
 
 const schemaTableSector = formSchema.extend({
