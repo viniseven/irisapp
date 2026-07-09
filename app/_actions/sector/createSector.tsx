@@ -1,6 +1,6 @@
 "use server";
 
-import { FormSchema } from "@/app/sector/_components/FormSectorComponent";
+import { FormSchema } from "@/app/sector/_components/formSectorComponent";
 import { prisma } from "@/lib/prisma";
 
 export async function createSector({ name }: FormSchema) {

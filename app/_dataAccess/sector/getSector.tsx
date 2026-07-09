@@ -29,7 +29,7 @@ export async function getSectorEmployeeCount() {
   });
 
   return sectors.map((sector) => ({
-    name: sector.name,
+    name: sector.name.toUpperCase(),
     quantityEmployees: sector._count.employeers,
   }));
 }
