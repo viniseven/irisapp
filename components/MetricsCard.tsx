@@ -1,20 +1,28 @@
 interface MetricsCardProps {
   title: string;
-  metric: string;
-  className: string;
+  value: number;
+  children: React.ReactNode;
+  iconBgColor: string;
 }
 
 export default function MetricsCard({
   title,
-  metric,
-  className,
+  value,
+  children,
+  iconBgColor,
 }: MetricsCardProps) {
   return (
-    <div
-      className={`${className} flex w-full flex-col gap-1 rounded-lg bg-white p-8`}
-    >
-      <p className="text-text-muted text-xs font-semibold">{title}</p>
-      <span className="text-5xl font-bold">{metric}</span>
+    <div className="flex w-full items-center gap-3 rounded-lg bg-white p-3">
+      <div
+        className={`flex items-center justify-center rounded-2xl ${iconBgColor} p-3`}
+      >
+        {children}
+      </div>
+
+      <div>
+        <span className="text-3xl font-bold">{value}</span>
+        <p className="text-text-muted text-sm">{title}</p>
+      </div>
     </div>
   );
 }
