@@ -15,7 +15,7 @@ export default function SidebarButton({ children, href }: SidebarButtonProps) {
     <Button
       asChild
       variant="ghost"
-      className={`hover:bg-brand-light hover:text-text-hover flex w-full justify-start py-5 text-xl ${pathname == href ? "bg-brand-light text-blue-dark" : ""}`}
+      className={`hover:bg-brand-light hover:text-text-hover flex w-full justify-start py-5 text-base ${pathname == href ? "bg-blue-dark text-white" : ""}`}
     >
       <Link href={href}>{children}</Link>
     </Button>
