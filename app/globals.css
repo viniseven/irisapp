@@ -8,6 +8,12 @@
   --color-foreground: var(--foreground);
 
   --color-sidebar-bg: #ffffff;
+  --color-gray-100: #eeecfc;
+  --color-green-90: #dcfce7;
+  --color-green-900: #10b981;
+  --color-yellow-90: #fef3c7;
+  --color-orange-800: #f59e0b;
+  --color-red-90: #fee2e2;
 
   --color-brand-dark: #0b1c30;
   --color-brand-light: #dbeafe;
