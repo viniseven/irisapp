@@ -33,7 +33,7 @@ export default function DialogComponent({
           {dialogHeader}
         </ButtonAction>
       </DialogTrigger>
-      <DialogContent className="bg-background">
+      <DialogContent className="bg-white">
         <DialogHeader className="text-2xl font-bold">
           {dialogHeader}
         </DialogHeader>

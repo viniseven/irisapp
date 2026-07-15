@@ -1,30 +1,33 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { formSchema } from "./formSectorComponent";
-import z from "zod";
 
-const schemaTableSector = formSchema.extend({
-  quantityEmployees: z.number(),
-});
+export type SectorColumns = {
+  sector: string;
+  employeers: number;
+  trainings: number;
+  progress: number;
+};
 
-type SchemaTableSector = z.infer<typeof schemaTableSector>;
-
-export const columns: ColumnDef<SchemaTableSector>[] = [
+export const columns: ColumnDef<SectorColumns>[] = [
   {
-    accessorKey: "name",
-    header: "NOME DO SETOR",
+    accessorKey: "sector",
+    header: "Setor",
   },
   {
-    accessorKey: "manager",
-    header: "RESPONSÁVEL",
+    accessorKey: "employeers",
+    header: "Colaboradores",
   },
   {
-    accessorKey: "quantityEmployees",
-    header: "QUANTIDADE DE COLABORADORES",
+    accessorKey: "trainings",
+    header: "Treinamentos",
+  },
+  {
+    accessorKey: "progress",
+    header: "Progresso",
   },
   {
     accessorKey: "",
-    header: "AÇÕES",
+    header: "Acções",
   },
 ];
