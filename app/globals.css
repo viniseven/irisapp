@@ -13,6 +13,7 @@
   --color-green-900: #10b981;
   --color-yellow-90: #fef3c7;
   --color-orange-800: #f59e0b;
+  --color-orange-90: #ffdd91;
   --color-red-90: #fee2e2;
 
   --color-brand-dark: #0b1c30;
@@ -21,6 +22,7 @@
   --color-blue-light: #eff4ff;
   --color-red: #ba1a1a;
   --color-yellow-info: #fbbf24;
+  --color-white: #ffffff;
 
   --color-text-main: var(--color-brand-dark);
   --color-text-muted: #6b7280;
