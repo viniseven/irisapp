@@ -21,7 +21,7 @@ export default async function SectorPage() {
         </MetricsCard>
         <MetricsCard
           title="Setor com maior engajamento"
-          value={220}
+          value="Tecnologia da Informação"
           iconBgColor="bg-orange-90"
         >
           <Flame className="text-orange-800" />
