@@ -8,7 +8,7 @@ interface ButtonTitleProps extends ComponentPropsWithoutRef<typeof Button> {
 
 export default function ButtonAction({ children, ...props }: ButtonTitleProps) {
   return (
-    <Button {...props} className="px-6 py-6 font-bold hover:cursor-pointer">
+    <Button {...props} className="p-5 font-bold hover:cursor-pointer">
       {children}
     </Button>
   );
