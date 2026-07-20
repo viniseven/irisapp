@@ -16,13 +16,34 @@ import { Loader2Icon } from "lucide-react";
 import { getFindSector } from "@/app/_dataAccess/sector/getSector";
 import InfoCard from "@/components/InfoCard";
 import { toast } from "sonner";
+import { useEffect, useState } from "react";
+import { getAllEmployee } from "@/app/_dataAccess/employee/getEmployee";
+import {
+  Combobox,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxList,
+} from "@/components/ui/combobox";
 
 interface ChangeDialogOpenProps {
   changeStatusModal: () => void;
 }
 
+interface ComboboxManagerOptionProps {
+  id: string;
+  name: string;
+}
+
 export const formSchema = z.object({
-  name: z.string().trim().min(1, "O nome do setor é obrigatório").toLowerCase(),
+  sector: z
+    .string()
+    .trim()
+    .min(1, "O nome do setor é obrigatório")
+    .toLowerCase(),
+
+  manager: z.string().trim().toLowerCase(),
 });
 
 export type FormSchema = z.infer<typeof formSchema>;
@@ -30,22 +51,32 @@ export type FormSchema = z.infer<typeof formSchema>;
 export default function FormSectorComponent({
   changeStatusModal,
 }: ChangeDialogOpenProps) {
+  const [employees, setEmployees] = useState<ComboboxManagerOptionProps[]>([]);
+  const [valueManager, setValueManager] = useState("");
+
+  console.log(valueManager);
+
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
+      sector: "",
+      manager: "",
     },
   });
 
+  useEffect(() => {
+    getAllEmployee().then((data) => setEmployees(data));
+  }, []);
+
   function handleDialogOpenchange() {
-    changeStatusModal(false);
+    changeStatusModal();
   }
 
   const onSubmit = async (data: FormSchema) => {
     try {
-      const { name } = data;
+      const { sector } = data;
 
-      const resultFindSector = await getFindSector(name);
+      const resultFindSector = await getFindSector(sector);
 
       if (resultFindSector) {
         toast.error("Já existe um setor com este nome");
@@ -67,7 +98,7 @@ export default function FormSectorComponent({
     >
       <FieldGroup>
         <Controller
-          name="name"
+          name="sector"
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
@@ -90,12 +121,57 @@ export default function FormSectorComponent({
                   field.onChange(cleanValue);
                 }}
               />
+
               {fieldState.invalid && (
                 <FieldError
                   className="text-text-alert"
                   errors={[fieldState.error]}
                 />
               )}
+            </Field>
+          )}
+        />
+
+        <Controller
+          name="manager"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="form-rhf-demo-title">
+                Responsável pelo Setor
+              </FieldLabel>
+
+              <Combobox
+                items={employees}
+                value={field.value}
+                onValueChange={(selectedId) => {
+                  field.onChange(selectedId);
+
+                  const selectedEmployee = employees.find(
+                    (emp) => emp.id === selectedId,
+                  );
+                  if (selectedEmployee) {
+                    setValueManager(selectedEmployee.name);
+                  }
+                }}
+              >
+                <ComboboxInput
+                  placeholder="Selecione o gestor "
+                  className="h-10 rounded-lg"
+                  value={valueManager}
+                  onChange={(e) => setValueManager(e.target.value)}
+                />
+                <ComboboxContent className="bg-white!">
+                  <ComboboxEmpty>Nenhum registro encontrado</ComboboxEmpty>
+                  <ComboboxList>
+                    {(item) => (
+                      <ComboboxItem key={item.id} value={item.id}>
+                        {item.name}
+                      </ComboboxItem>
+                    )}
+                  </ComboboxList>
+                </ComboboxContent>
+              </Combobox>
             </Field>
           )}
         />
