@@ -1,6 +1,5 @@
 "use client";
 
-import FormSectorComponent from "@/app/sector/_components/formSectorComponent";
 import ButtonAction from "./ButtonAction";
 import {
   Dialog,
@@ -15,13 +14,19 @@ import { useState } from "react";
 interface DialogComponentProps {
   dialogHeader?: string;
   dialogDescription?: string;
+
+  children:
+    React.ReactNode | ((props: { closeModal: () => void }) => React.ReactNode);
 }
 
 export default function DialogComponent({
   dialogHeader,
   dialogDescription,
+  children,
 }: DialogComponentProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const closeModal = () => setIsModalOpen(false);
 
   return (
     <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
@@ -38,7 +43,8 @@ export default function DialogComponent({
         <DialogDescription className="text-text-muted">
           {dialogDescription}
         </DialogDescription>
-        <FormSectorComponent onSuccess={() => setIsModalOpen(false)} />
+
+        {typeof children === "function" ? children({ closeModal }) : children}
       </DialogContent>
     </Dialog>
   );
