@@ -7,3 +7,11 @@ export async function getAllEmployee() {
 
   return employeers;
 }
+
+export async function getFindEmployee(badgeId: number) {
+  return await prisma.employee.findFirst({
+    where: {
+      badgeId,
+    },
+  });
+}
