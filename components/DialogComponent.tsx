@@ -15,13 +15,11 @@ import { useState } from "react";
 interface DialogComponentProps {
   dialogHeader?: string;
   dialogDescription?: string;
-  children: React.ReactNode;
 }
 
 export default function DialogComponent({
   dialogHeader,
   dialogDescription,
-  children,
 }: DialogComponentProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -40,7 +38,7 @@ export default function DialogComponent({
         <DialogDescription className="text-text-muted">
           {dialogDescription}
         </DialogDescription>
-        {children}
+        <FormSectorComponent onSuccess={() => setIsModalOpen(false)} />
       </DialogContent>
     </Dialog>
   );

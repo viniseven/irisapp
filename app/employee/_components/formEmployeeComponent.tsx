@@ -11,74 +11,58 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import ButtonAction from "@/components/ButtonAction";
-
-import { Loader2Icon } from "lucide-react";
-
-import InfoCard from "@/components/InfoCard";
-
-import { useEffect, useState } from "react";
-import { getAllEmployee } from "@/app/_dataAccess/employee/getEmployee";
-
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { createSector } from "@/app/_actions/sector/createSector";
+import { Loader2Icon } from "lucide-react";
+import { getFindSector } from "@/app/_dataAccess/sector/getSector";
+import InfoCard from "@/components/InfoCard";
 import { toast } from "sonner";
 
-interface SelectManagerOptionProps {
-  id: string;
-  name: string;
-}
-
-interface FormSectorComponentProps {
-  onSuccess?: () => void;
+interface ChangeDialogOpenProps {
+  changeStatusModal: () => void;
 }
 
 export const formSchema = z.object({
-  sector: z
-    .string()
-    .trim()
-    .min(1, "O nome do setor é obrigatório")
-    .toLowerCase(),
-
-  managerId: z.string(),
+  name: z.string().trim().min(1, "O nome é obrigatório").toLowerCase(),
+  badgeId: z.number().min(1, "O número de matrícula é obrigatório"),
+  sector: z.string(),
+  jobTitle: z.string().min(1, "O cargo é obrigatório").toLowerCase(),
+  isActive: z.boolean(),
 });
 
 export type FormSchema = z.infer<typeof formSchema>;
 
-export default function FormSectorComponent({
-  onSuccess,
-}: FormSectorComponentProps) {
-  const [employees, setEmployees] = useState<SelectManagerOptionProps[]>([]);
-
+export default function FormEmployeeComponent({
+  changeStatusModal,
+}: ChangeDialogOpenProps) {
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      sector: "",
-      managerId: "",
+      name: "",
     },
   });
 
-  useEffect(() => {
-    getAllEmployee().then((data) => setEmployees(data));
-  }, []);
+  function handleDialogOpenchange() {
+    changeStatusModal(false);
+  }
 
   const onSubmit = async (data: FormSchema) => {
-    const result = await createSector(data);
+    try {
+      const { name } = data;
 
-    if (!result.success) {
-      toast.error(result.message);
-      return;
+      const resultFindSector = await getFindSector(name);
+
+      if (resultFindSector) {
+        toast.error("Já existe um setor com este nome");
+        return;
+      }
+      await createSector(data);
+      handleDialogOpenchange();
+      toast.success("Colaborador cadastrado com sucesso");
+    } catch (error) {
+      console.error("Erro ao cadastrar colaborador:", error);
     }
-
-    toast.success(result.message);
-    onSuccess?.();
   };
+
   return (
     <form
       onSubmit={form.handleSubmit(onSubmit)}
@@ -87,7 +71,7 @@ export default function FormSectorComponent({
     >
       <FieldGroup>
         <Controller
-          name="sector"
+          name="name"
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
@@ -110,44 +94,12 @@ export default function FormSectorComponent({
                   field.onChange(cleanValue);
                 }}
               />
-
               {fieldState.invalid && (
                 <FieldError
                   className="text-text-alert"
                   errors={[fieldState.error]}
                 />
               )}
-            </Field>
-          )}
-        />
-
-        <Controller
-          name="managerId"
-          control={form.control}
-          render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="form-rhf-demo-title">
-                Responsável pelo Setor
-              </FieldLabel>
-
-              <Select onValueChange={field.onChange} value={field.value}>
-                <SelectTrigger className="w-45">
-                  <SelectValue placeholder="Selecione o Gestor" />
-                </SelectTrigger>
-                <SelectContent className="bg-white">
-                  <SelectGroup>
-                    {employees.map((employee) => (
-                      <SelectItem
-                        key={employee.id}
-                        value={employee.id}
-                        className="cursor-pointer"
-                      >
-                        {employee.name}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
             </Field>
           )}
         />
