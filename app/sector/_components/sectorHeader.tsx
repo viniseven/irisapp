@@ -2,6 +2,7 @@
 
 import DialogComponent from "@/components/DialogComponent";
 import TitlePage from "@/components/TitlePage";
+import FormSectorComponent from "./formSectorComponent";
 
 export default function SectorHeader() {
   return (
@@ -14,7 +15,9 @@ export default function SectorHeader() {
       <DialogComponent
         dialogHeader="Novo Setor"
         dialogDescription="Preencha as informações para criar um novo setor."
-      />
+      >
+        {({ closeModal }) => <FormSectorComponent onSuccess={closeModal} />}
+      </DialogComponent>
     </div>
   );
 }
