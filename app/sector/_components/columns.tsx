@@ -25,8 +25,6 @@ export const columns: ColumnDef<SectorColumns>[] = [
     ),
     cell: ({ row }) => {
       const sectorData = row.original;
-      console.log(sectorData);
-      // Fallback caso você ainda não tenha o líder vindo do banco
       const leaderName = sectorData.leader?.name || "Responsável não definido";
 
       return (

@@ -6,7 +6,7 @@ import { DataTable } from "./_components/dataTable";
 import { columns } from "./_components/columns";
 
 export default async function SectorPage() {
-  const data = await getAllSector();
+  const dataSectors = await getAllSector();
 
   return (
     <div className="flex flex-col gap-10">
@@ -42,7 +42,7 @@ export default async function SectorPage() {
         </MetricsCard>
       </div>
       <div>
-        <DataTable columns={columns} data={data} />
+        <DataTable columns={columns} data={dataSectors} />
       </div>
     </div>
   );
