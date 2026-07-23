@@ -4,9 +4,10 @@ import { Building2, Flame, GraduationCap, TrendingUp } from "lucide-react";
 import SectorHeader from "./_components/sectorHeader";
 import { DataTable } from "./_components/dataTable";
 import { columns } from "./_components/columns";
+import { getSectorWithDetails } from "../_dataAccess/sector/getSectorWithDetails";
 
 export default async function SectorPage() {
-  const dataSectors = await getAllSector();
+  const dataSectorsWithDetails = await getSectorWithDetails();
 
   return (
     <div className="flex flex-col gap-10">
@@ -42,7 +43,7 @@ export default async function SectorPage() {
         </MetricsCard>
       </div>
       <div>
-        <DataTable columns={columns} data={dataSectors} />
+        <DataTable columns={columns} data={dataSectorsWithDetails} />
       </div>
     </div>
   );

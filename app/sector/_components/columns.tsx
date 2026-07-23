@@ -6,13 +6,16 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Building2 } from "lucide-react";
 
 export type SectorColumns = {
-  sector: string;
-  employeers: number;
-  trainings: number;
-  progress: number;
-  leader?: {
+  id: string;
+  name: string;
+  manager: {
     name: string;
+  } | null;
+  _count: {
+    employeers: number;
   };
+  trainings?: number;
+  progress?: number;
 };
 
 export const columns: ColumnDef<SectorColumns>[] = [
@@ -25,7 +28,7 @@ export const columns: ColumnDef<SectorColumns>[] = [
     ),
     cell: ({ row }) => {
       const sectorData = row.original;
-      const leaderName = sectorData.leader?.name || "Responsável não definido";
+      const leaderName = sectorData.manager?.name || "Responsável não definido";
 
       return (
         <div className="flex items-center gap-3 pl-4">
@@ -34,8 +37,8 @@ export const columns: ColumnDef<SectorColumns>[] = [
           </div>
 
           <div className="flex flex-col">
-            <span className="text-sm leading-tight font-semibold text-slate-800">
-              Tecnologia da Informação
+            <span className="text-sm leading-tight font-semibold text-slate-800 capitalize">
+              {sectorData.name}
             </span>
             <div className="mt-1 flex items-center gap-1.5">
               <span className="text-xs text-slate-500">{leaderName}</span>
@@ -53,10 +56,12 @@ export const columns: ColumnDef<SectorColumns>[] = [
       </div>
     ),
     cell: ({ row }) => {
-      const count = row.getValue("employeers") as number;
+      const count = row.original._count?.employeers ?? 0;
       return (
         <div className="flex flex-col text-center">
-          <span className="block text-sm font-bold text-slate-800">86</span>
+          <span className="block text-sm font-bold text-slate-800">
+            {count}
+          </span>
           <div>
             <span className="text-xs text-slate-400">colaboradores</span>
           </div>
@@ -75,7 +80,7 @@ export const columns: ColumnDef<SectorColumns>[] = [
       const count = row.getValue("trainings") as number;
       return (
         <div className="flex flex-col text-center">
-          <span className="text-sm font-bold text-slate-800">10</span>
+          <span className="text-sm font-bold text-slate-800">{count}</span>
           <div>
             <span className="text-xs text-slate-400">treinamentos</span>
           </div>
