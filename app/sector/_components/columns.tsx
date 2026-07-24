@@ -1,9 +1,10 @@
 "use client";
 
 import DropdownActions from "@/components/DropdownActions";
+import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { ColumnDef } from "@tanstack/react-table";
-import { Building2 } from "lucide-react";
+import { Building2, ArrowUpDown } from "lucide-react";
 
 export type SectorColumns = {
   id: string;
@@ -20,10 +21,16 @@ export type SectorColumns = {
 
 export const columns: ColumnDef<SectorColumns>[] = [
   {
-    accessorKey: "sector",
-    header: () => (
+    accessorKey: "name",
+    header: ({ column }) => (
       <div className="w-full pl-6 text-left font-semibold text-slate-500">
-        Setor
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Setor
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
       </div>
     ),
     cell: ({ row }) => {
