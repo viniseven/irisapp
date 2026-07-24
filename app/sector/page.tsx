@@ -8,6 +8,7 @@ import { getSectorWithDetails } from "../_dataAccess/sector/getSectorWithDetails
 
 export default async function SectorPage() {
   const dataSectorsWithDetails = await getSectorWithDetails();
+  const dataAllSectors = await getAllSector();
 
   return (
     <div className="flex flex-col gap-10">
@@ -15,7 +16,7 @@ export default async function SectorPage() {
       <div className="flex justify-between gap-3">
         <MetricsCard
           title="Total de Setores"
-          value={12}
+          value={dataAllSectors.length}
           iconBgColor="bg-gray-100"
         >
           <Building2 className="text-blue-dark" />
@@ -43,7 +44,11 @@ export default async function SectorPage() {
         </MetricsCard>
       </div>
       <div>
-        <DataTable columns={columns} data={dataSectorsWithDetails} />
+        <DataTable
+          columns={columns}
+          data={dataSectorsWithDetails}
+          pageSize={10}
+        />
       </div>
     </div>
   );
