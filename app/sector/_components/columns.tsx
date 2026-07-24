@@ -3,6 +3,7 @@
 import DropdownActions from "@/components/DropdownActions";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { formatTitleCase } from "@/lib/utils/formatTitleCase";
 import { ColumnDef } from "@tanstack/react-table";
 import { Building2, ArrowUpDown } from "lucide-react";
 
@@ -44,8 +45,8 @@ export const columns: ColumnDef<SectorColumns>[] = [
           </div>
 
           <div className="flex flex-col">
-            <span className="text-sm leading-tight font-semibold text-slate-800 capitalize">
-              {sectorData.name}
+            <span className="text-sm leading-tight font-semibold text-slate-800">
+              {formatTitleCase(sectorData.name)}
             </span>
             <div className="mt-1 flex items-center gap-1.5">
               <span className="text-xs text-slate-500">{leaderName}</span>
