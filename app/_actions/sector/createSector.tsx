@@ -13,10 +13,12 @@ export async function createSector(data: FormSchema) {
       return { success: false, message: "Já existe um setor com este nome" };
     }
 
+    const managerId = data.managerId !== "" ? data.managerId : null;
+
     await prisma.sector.create({
       data: {
         name: data.sector,
-        managerId: data.managerId,
+        managerId: managerId,
       },
     });
     revalidatePath("/sector");

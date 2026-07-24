@@ -46,7 +46,7 @@ export const formSchema = z.object({
     .min(1, "O nome do setor é obrigatório")
     .toLowerCase(),
 
-  managerId: z.string(),
+  managerId: z.string().optional().nullable(),
 });
 
 export type FormSchema = z.infer<typeof formSchema>;
@@ -130,7 +130,10 @@ export default function FormSectorComponent({
                 Responsável pelo Setor
               </FieldLabel>
 
-              <Select onValueChange={field.onChange} value={field.value}>
+              <Select
+                onValueChange={field.onChange}
+                value={field.value ?? undefined}
+              >
                 <SelectTrigger className="w-45">
                   <SelectValue placeholder="Selecione o Gestor" />
                 </SelectTrigger>
