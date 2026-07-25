@@ -4,7 +4,7 @@ export async function getSectorWithDetails() {
   const sectorWithManager = await prisma.sector.findMany({
     select: {
       id: true,
-      name: true,
+      nameSector: true,
       manager: {
         select: {
           name: true,
@@ -17,7 +17,7 @@ export async function getSectorWithDetails() {
       },
     },
     orderBy: {
-      name: "asc",
+      nameSector: "asc",
     },
   });
 

@@ -7,20 +7,17 @@ import { formatTitleCase } from "@/lib/utils/formatTitleCase";
 import { ColumnDef } from "@tanstack/react-table";
 import { Building2, ArrowUpDown } from "lucide-react";
 
-export type SectorColumns = {
+export type EmployeeColumns = {
   id: string;
-  nameSector: string;
-  manager: {
-    name: string;
-  } | null;
-  _count: {
-    employeers: number;
+  name: string;
+  jobTitle: string;
+  isActive: boolean;
+  sector: {
+    nameSector: string;
   };
-  trainings?: number;
-  progress?: number;
 };
 
-export const columns: ColumnDef<SectorColumns>[] = [
+export const columns: ColumnDef<EmployeeColumns>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => (
@@ -29,15 +26,12 @@ export const columns: ColumnDef<SectorColumns>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Setor
+          Colaborador
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       </div>
     ),
-    cell: ({ row }) => {
-      const sectorData = row.original;
-      const leaderName = sectorData.manager?.name || "Responsável não definido";
-
+    cell: ({ row: { original } }) => {
       return (
         <div className="flex items-center gap-3 pl-4">
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-50 font-semibold text-indigo-600">
@@ -46,10 +40,12 @@ export const columns: ColumnDef<SectorColumns>[] = [
 
           <div className="flex flex-col">
             <span className="text-sm leading-tight font-semibold text-slate-800">
-              {formatTitleCase(sectorData.nameSector)}
+              {formatTitleCase(original.name)}
             </span>
             <div className="mt-1 flex items-center gap-1.5">
-              <span className="text-xs text-slate-500">{leaderName}</span>
+              <span className="text-xs text-slate-500">
+                {formatTitleCase(original.jobTitle)}
+              </span>
             </div>
           </div>
         </div>
@@ -57,22 +53,16 @@ export const columns: ColumnDef<SectorColumns>[] = [
     },
   },
   {
-    accessorKey: "employeers",
+    accessorKey: "nameSector",
     header: () => (
-      <div className="text-center font-semibold text-slate-500">
-        Colaboradores
-      </div>
+      <div className="text-center font-semibold text-slate-500">Setor</div>
     ),
-    cell: ({ row }) => {
-      const count = row.original._count?.employeers ?? 0;
+    cell: ({ row: { original } }) => {
       return (
         <div className="flex flex-col text-center">
-          <span className="block text-sm font-bold text-slate-800">
-            {count}
+          <span className="text-text-muted block text-sm">
+            {formatTitleCase(original.sector.nameSector)}
           </span>
-          <div>
-            <span className="text-xs text-slate-400">colaboradores</span>
-          </div>
         </div>
       );
     },

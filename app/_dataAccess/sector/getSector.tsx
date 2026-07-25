@@ -11,7 +11,7 @@ export async function getAllSector() {
 export async function getFindSector(name: string) {
   return await prisma.sector.findFirst({
     where: {
-      name,
+      nameSector: name,
     },
   });
 }
@@ -19,7 +19,7 @@ export async function getFindSector(name: string) {
 export async function getSectorEmployeeCount() {
   const sectors = await prisma.sector.findMany({
     select: {
-      name: true,
+      nameSector: true,
       _count: {
         select: {
           employeers: true,
@@ -29,7 +29,7 @@ export async function getSectorEmployeeCount() {
   });
 
   return sectors.map((sector) => ({
-    name: sector.name.toUpperCase(),
+    nameSector: sector.nameSector.toUpperCase(),
     quantityEmployees: sector._count.employeers,
   }));
 }

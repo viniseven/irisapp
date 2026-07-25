@@ -32,7 +32,7 @@ import CheckboxComponent from "@/components/CheckboxComponent";
 
 interface SelectSectorOptionProps {
   id: string;
-  name: string;
+  nameSector: string;
 }
 
 interface FormEmployeeComponentProps {
@@ -172,7 +172,7 @@ export default function FormEmployeeComponent({
                         value={sector.id}
                         className="cursor-pointer"
                       >
-                        {sector.name}
+                        {sector.nameSector}
                       </SelectItem>
                     ))}
                   </SelectGroup>

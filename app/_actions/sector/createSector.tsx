@@ -17,7 +17,7 @@ export async function createSector(data: FormSchema) {
 
     await prisma.sector.create({
       data: {
-        name: data.sector,
+        nameSector: data.sector,
         managerId: managerId,
       },
     });

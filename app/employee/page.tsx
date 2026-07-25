@@ -2,8 +2,13 @@ import MetricsCard from "@/components/MetricsCard";
 import EmployeeHeader from "./_components/employeeHeader";
 import { formatPercent } from "@/lib/utils/formatPercent";
 import { Users, CircleCheck, Clock, UserRoundX } from "lucide-react";
+import { DataTable } from "./_components/dataTable";
+import { columns } from "./_components/columns";
+import { getEmployeeWithDetails } from "../_dataAccess/employee/getEmployeeWithDetails";
 
-export default function EmployeePage() {
+export default async function EmployeePage() {
+  const data = await getEmployeeWithDetails();
+
   return (
     <div className="flex flex-col gap-10">
       <EmployeeHeader />
@@ -25,7 +30,9 @@ export default function EmployeePage() {
           <UserRoundX className="text-red" />
         </MetricsCard>
       </div>
-      <div></div>
+      <div>
+        <DataTable columns={columns} pageSize={10} data={data} />
+      </div>
     </div>
   );
 }
