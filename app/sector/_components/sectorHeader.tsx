@@ -1,7 +1,6 @@
 "use client";
 
 import TitlePage from "@/components/TitlePage";
-import FormSectorComponent from "./upsertDialogContent";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import ButtonAction from "@/components/ButtonAction";
 import { Plus } from "lucide-react";

@@ -1,7 +1,7 @@
 "use server";
 
 import { getFindEmployee } from "@/app/_dataAccess/employee/getEmployee";
-import { FormSchema } from "@/app/employee/_components/formEmployeeComponent";
+import { FormSchema } from "@/app/employee/_components/upsertDialogContent";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
