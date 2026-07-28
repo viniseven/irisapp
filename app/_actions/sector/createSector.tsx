@@ -1,7 +1,7 @@
 "use server";
 
 import { getFindSector } from "@/app/_dataAccess/sector/getSector";
-import { FormSchema } from "@/app/sector/_components/formSectorComponent";
+import { FormSchema } from "@/app/sector/_components/upsertDialogContent";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 

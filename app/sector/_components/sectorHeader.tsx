@@ -1,10 +1,15 @@
 "use client";
 
-import DialogComponent from "@/components/DialogComponent";
 import TitlePage from "@/components/TitlePage";
-import FormSectorComponent from "./formSectorComponent";
+import FormSectorComponent from "./upsertDialogContent";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import ButtonAction from "@/components/ButtonAction";
+import { Plus } from "lucide-react";
+import { useState } from "react";
+import UpsertDialogSectorComponent from "./upsertDialogContent";
 
 export default function SectorHeader() {
+  const [dialogIsOpen, setDialogIsOpen] = useState(false);
   return (
     <div className="flex items-center justify-between">
       <TitlePage
@@ -12,12 +17,14 @@ export default function SectorHeader() {
         description="Visualize e organize as unidades estruturais da organização."
       />
 
-      <DialogComponent
-        dialogHeader="Novo Setor"
-        dialogDescription="Preencha as informações para criar um novo setor."
-      >
-        {({ closeModal }) => <FormSectorComponent onSuccess={closeModal} />}
-      </DialogComponent>
+      <Dialog open={dialogIsOpen} onOpenChange={setDialogIsOpen}>
+        <DialogTrigger asChild>
+          <ButtonAction title="Novo Setor">
+            <Plus />
+          </ButtonAction>
+        </DialogTrigger>
+        <UpsertDialogSectorComponent onSuccess={() => setDialogIsOpen(false)} />
+      </Dialog>
     </div>
   );
 }

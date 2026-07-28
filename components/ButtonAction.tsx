@@ -6,10 +6,15 @@ interface ButtonTitleProps extends ComponentPropsWithoutRef<typeof Button> {
   children?: React.ReactNode;
 }
 
-export default function ButtonAction({ children, ...props }: ButtonTitleProps) {
+export default function ButtonAction({
+  title,
+  children,
+  ...props
+}: ButtonTitleProps) {
   return (
     <Button {...props} className="p-5 font-bold hover:cursor-pointer">
       {children}
+      {title}
     </Button>
   );
 }
