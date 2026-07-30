@@ -2,10 +2,12 @@
 
 import DropdownActions from "@/components/DropdownActions";
 import { Button } from "@/components/ui/button";
+
 import { Progress } from "@/components/ui/progress";
 import { formatTitleCase } from "@/lib/utils/formatTitleCase";
 import { ColumnDef } from "@tanstack/react-table";
 import { Building2, ArrowUpDown } from "lucide-react";
+import UpsertDialogSectorComponent from "./upsertDialogContent";
 
 export type SectorColumns = {
   id: string;
@@ -123,7 +125,14 @@ export const columns: ColumnDef<SectorColumns>[] = [
     cell: ({ row }) => {
       return (
         <div className="text-right">
-          <DropdownActions />
+          <DropdownActions>
+            <UpsertDialogSectorComponent
+              defaultValues={{
+                sector: row.original.nameSector,
+                managerId: row.original.manager?.id ?? null,
+              }}
+            />
+          </DropdownActions>
         </div>
       );
     },
