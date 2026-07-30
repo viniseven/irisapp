@@ -129,7 +129,7 @@ export const columns: ColumnDef<SectorColumns>[] = [
             <UpsertDialogSectorComponent
               defaultValues={{
                 sector: row.original.nameSector,
-                managerId: row.original.manager?.id ?? null,
+                managerId: row.original.manager?.name ?? null,
               }}
             />
           </DropdownActions>
