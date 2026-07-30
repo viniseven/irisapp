@@ -1,6 +1,5 @@
 "use client";
 
-import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import {
@@ -9,6 +8,10 @@ import {
   FieldGroup,
   FieldLabel,
 } from "@/components/ui/field";
+import {
+  CreateSectorSchema,
+  createSectorFormSchema,
+} from "@/app/schemas/sectorSchema";
 import { Input } from "@/components/ui/input";
 import ButtonAction from "@/components/ButtonAction";
 
@@ -42,39 +45,31 @@ interface SelectManagerOptionProps {
 }
 
 interface UpsertDialogSectorComponentProps {
+  defaultValues?: CreateSectorSchema;
   onSuccess?: () => void;
 }
 
-export const formSchema = z.object({
-  sector: z
-    .string()
-    .trim()
-    .min(1, "O nome do setor é obrigatório")
-    .toLowerCase(),
-
-  managerId: z.string().optional().nullable(),
-});
-
-export type FormSchema = z.infer<typeof formSchema>;
-
 export default function UpsertDialogSectorComponent({
+  defaultValues,
   onSuccess,
 }: UpsertDialogSectorComponentProps) {
   const [employees, setEmployees] = useState<SelectManagerOptionProps[]>([]);
 
-  const form = useForm<FormSchema>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
+  const form = useForm<CreateSectorSchema>({
+    resolver: zodResolver(createSectorFormSchema),
+    defaultValues: defaultValues ?? {
       sector: "",
       managerId: "",
     },
   });
 
+  const isEditing = !!defaultValues;
+
   useEffect(() => {
     getAllEmployee().then((data) => setEmployees(data));
   }, []);
 
-  const onSubmit = async (data: FormSchema) => {
+  const onSubmit = async (data: CreateSectorSchema) => {
     const result = await createSector(data);
 
     if (!result.success) {
@@ -93,9 +88,11 @@ export default function UpsertDialogSectorComponent({
         className="flex flex-col gap-4"
       >
         <DialogHeader>
-          <DialogTitle>Novo Setor</DialogTitle>
+          <DialogTitle>{isEditing ? "Editar Setor" : "Novo Setor"}</DialogTitle>
           <DialogDescription>
-            Preencha as informações para criar um novo setor
+            {isEditing
+              ? "Preencha as informações para editar setor"
+              : "Preencha as informações para criar um novo setor"}
           </DialogDescription>
         </DialogHeader>
         <FieldGroup>
