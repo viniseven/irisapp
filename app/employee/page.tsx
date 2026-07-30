@@ -1,6 +1,5 @@
 import MetricsCard from "@/components/MetricsCard";
 import EmployeeHeader from "./_components/employeeHeader";
-import { formatPercent } from "@/lib/utils/formatPercent";
 import { Users, CircleCheck, Clock, UserRoundX } from "lucide-react";
 import { DataTable } from "./_components/dataTable";
 import { columns } from "./_components/columns";
