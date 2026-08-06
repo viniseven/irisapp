@@ -51,7 +51,9 @@ export const columns: ColumnDef<SectorColumns>[] = [
               {formatTitleCase(sectorData.nameSector)}
             </span>
             <div className="mt-1 flex items-center gap-1.5">
-              <span className="text-xs text-slate-500">{leaderName}</span>
+              <span className="text-xs text-slate-500 capitalize">
+                <span className="font-bold">Gestor:</span> {leaderName}
+              </span>
             </div>
           </div>
         </div>
@@ -129,7 +131,7 @@ export const columns: ColumnDef<SectorColumns>[] = [
             <UpsertDialogSectorComponent
               defaultValues={{
                 sector: row.original.nameSector,
-                managerId: row.original.manager?.name ?? null,
+                managerId: row.original.manager?.name ?? "",
               }}
             />
           </DropdownActions>

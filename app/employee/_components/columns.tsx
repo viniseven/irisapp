@@ -14,7 +14,7 @@ export type EmployeeColumns = {
   isActive: boolean;
   sector: {
     nameSector: string;
-  };
+  } | null;
 };
 
 export const columns: ColumnDef<EmployeeColumns>[] = [
@@ -61,7 +61,7 @@ export const columns: ColumnDef<EmployeeColumns>[] = [
       return (
         <div className="flex flex-col text-center">
           <span className="text-text-muted block text-sm">
-            {formatTitleCase(original.sector.nameSector)}
+            {formatTitleCase(original.sector?.nameSector || "Não vinculado")}
           </span>
         </div>
       );
@@ -113,7 +113,9 @@ export const columns: ColumnDef<EmployeeColumns>[] = [
     cell: ({ row }) => {
       return (
         <div className="text-right">
-          <DropdownActions />
+          <DropdownActions>
+            <UpsertDialogEmployeeComponent />
+          </DropdownActions>
         </div>
       );
     },
