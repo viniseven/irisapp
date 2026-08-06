@@ -46,7 +46,7 @@ interface UpsertDialogEmployeeComponentProps {
   isOpen?: boolean;
 }
 
-export const formSchema = z.object({
+const formSchema = z.object({
   name: z.string().trim().min(1, "O nome é obrigatório").toLowerCase(),
   badgeId: z.number().min(1, "O número de matrícula é obrigatório").max(999999),
   sector: z.string().nonempty({ error: "Por favor, selecione um setor." }),
