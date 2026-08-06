@@ -9,8 +9,8 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import {
-  CreateSectorSchema,
-  createSectorFormSchema,
+  UpsertSectorSchema,
+  upsertSectorFormSchema,
 } from "@/app/schemas/sectorSchema";
 import { Input } from "@/components/ui/input";
 import ButtonAction from "@/components/ButtonAction";
@@ -30,7 +30,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { createSector } from "@/app/_actions/sector/createSector";
+import { upsertSector } from "@/app/_actions/sector/upsertSector";
 import { toast } from "sonner";
 import {
   DialogContent,
@@ -45,7 +45,7 @@ interface SelectManagerOptionProps {
 }
 
 interface UpsertDialogSectorComponentProps {
-  defaultValues?: CreateSectorSchema;
+  defaultValues?: UpsertSectorSchema;
   onSuccess?: () => void;
 }
 
@@ -55,8 +55,8 @@ export default function UpsertDialogSectorComponent({
 }: UpsertDialogSectorComponentProps) {
   const [employees, setEmployees] = useState<SelectManagerOptionProps[]>([]);
 
-  const form = useForm<CreateSectorSchema>({
-    resolver: zodResolver(createSectorFormSchema),
+  const form = useForm<UpsertSectorSchema>({
+    resolver: zodResolver(upsertSectorFormSchema),
     defaultValues: defaultValues ?? {
       sector: "",
       managerId: "",
@@ -69,8 +69,8 @@ export default function UpsertDialogSectorComponent({
     getAllEmployee().then((data) => setEmployees(data));
   }, []);
 
-  const onSubmit = async (data: CreateSectorSchema) => {
-    const result = await createSector(data);
+  const onSubmit = async (data: UpsertSectorSchema) => {
+    const result = await upsertSector({ ...data, id: defaultValues?.id });
 
     if (!result.success) {
       toast.error(result.message);
