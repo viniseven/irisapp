@@ -1,13 +1,14 @@
 import z from "zod";
 
-export const createSectorFormSchema = z.object({
+export const upsertSectorFormSchema = z.object({
+  id: z.string().optional(),
   sector: z
     .string()
     .trim()
     .min(1, "O nome do setor é obrigatório")
     .toLowerCase(),
 
-  managerId: z.string().optional().nullable(),
+  managerId: z.string().optional(),
 });
 
-export type CreateSectorSchema = z.infer<typeof createSectorFormSchema>;
+export type UpsertSectorSchema = z.infer<typeof upsertSectorFormSchema>;
