@@ -8,32 +8,28 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const compat = new FlatCompat({
-  baseDirectory: __dirname
+  baseDirectory: __dirname,
 });
 
 /** @type {import("eslint").Linter.Config[]} */
 const eslintConfig = [
-  // 1. Definição Global de Arquivos Ignorados
   {
-    ignores: [".next/**", "out/**", "build/**", "next-env.d.ts"]
+    ignores: [".next/**", "out/**", "build/**", "next-env.d.ts"],
   },
 
-  // 2. Extensões nativas do Next.js e TypeScript
   ...compat.extends("next/core-web-vitals", "next/typescript"),
 
-  // 3. Sua Camada de Automação de Imports
   {
     plugins: {
-      // Aqui mapeamos as strings para os objetos dos plugins importados no topo
       "simple-import-sort": simpleImportSort,
-      "unused-imports": unusedImports
+      "unused-imports": unusedImports,
     },
     rules: {
       "simple-import-sort/imports": "error",
       "simple-import-sort/exports": "error",
-      "unused-imports/no-unused-imports": "error"
-    }
-  }
+      "unused-imports/no-unused-imports": "error",
+    },
+  },
 ];
 
 export default eslintConfig;
