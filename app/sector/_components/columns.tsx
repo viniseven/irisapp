@@ -13,6 +13,7 @@ export type SectorColumns = {
   id: string;
   nameSector: string;
   manager: {
+    id: string;
     name: string;
   } | null;
   _count: {
@@ -130,8 +131,9 @@ export const columns: ColumnDef<SectorColumns>[] = [
           <DropdownActions>
             <UpsertDialogSectorComponent
               defaultValues={{
+                id: row.original.id,
                 sector: row.original.nameSector,
-                managerId: row.original.manager?.name ?? "",
+                managerId: row.original.manager?.id ?? "",
               }}
             />
           </DropdownActions>

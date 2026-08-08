@@ -58,6 +58,7 @@ export default function UpsertDialogSectorComponent({
   const form = useForm<UpsertSectorSchema>({
     resolver: zodResolver(upsertSectorFormSchema),
     defaultValues: defaultValues ?? {
+      id: "",
       sector: "",
       managerId: "",
     },
@@ -70,7 +71,7 @@ export default function UpsertDialogSectorComponent({
   }, []);
 
   const onSubmit = async (data: UpsertSectorSchema) => {
-    const result = await upsertSector({ ...data, id: defaultValues?.id });
+    const result = await upsertSector({ ...data, id: defaultValues?.id ?? "" });
 
     if (!result.success) {
       toast.error(result.message);

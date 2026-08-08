@@ -6,6 +6,7 @@ import { Progress } from "@/components/ui/progress";
 import { formatTitleCase } from "@/lib/utils/formatTitleCase";
 import { ColumnDef } from "@tanstack/react-table";
 import { Building2, ArrowUpDown } from "lucide-react";
+import UpsertDialogEmployeeComponent from "./upsertDialogContent";
 
 export type EmployeeColumns = {
   id: string;

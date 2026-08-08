@@ -8,6 +8,7 @@ export async function getSectorWithDetails() {
       manager: {
         select: {
           name: true,
+          id: true,
         },
       },
       _count: {
